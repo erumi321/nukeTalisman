@@ -1,0 +1,27 @@
+		if UnitHasSkill(throwingPlayer, "TeamHeadWinds") then
+			if GetActiveUnitId({PlayerIndex = 1}) == throwingPlayer.Id then
+				for k, id in pairs( TeamA.ObjectIds ) do
+					if CheckUnitAlive( id ) then
+						Destroy({Id = id})
+						local pyreHealthBonusValue = -2
+						TeamB.PyreMaxHealth = TeamB.PyreMaxHealth + pyreHealthBonusValue
+						TeamB.PrevPyreHealth = TeamB.PyreHealth
+						TeamB.PyreHealth = TeamB.PyreHealth + pyreHealthBonusValue
+						UpdatePyreScale( TeamB )
+						thread( ShowGoalHealth, TeamB, nil, 0.3 )
+					end
+				end
+			else
+				for k, id in pairs( TeamB.ObjectIds ) do
+					if CheckUnitAlive( id ) then
+						Destroy({Id = id})
+						local pyreHealthBonusValue = -2
+						TeamA.PyreMaxHealth = TeamA.PyreMaxHealth + pyreHealthBonusValue
+						TeamA.PrevPyreHealth = TeamA.PyreHealth
+						TeamA.PyreHealth = TeamA.PyreHealth + pyreHealthBonusValue
+						UpdatePyreScale( TeamA )
+						thread( ShowGoalHealth, TeamA, nil , 0.3 )				
+					end
+				end
+			end	
+		end
